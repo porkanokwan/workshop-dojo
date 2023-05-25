@@ -1,0 +1,48 @@
+.restuarant-table tbody {
+  color: #5dad6e !important;
+}
+
+.restuarant-table table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+  margin: auto;
+}
+
+.restuarant-table th {
+  border: 1px solid #565555;
+  text-align: left;
+  padding: 8px;
+  background-color: #ffd800;
+  color: white;
+}
+
+.restuarant-table td {
+  border: 1px solid #565555;
+  text-align: left;
+  padding: 8px;
+  color: black;
+}
+
+.restuarant-table tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.restuarant-table tr:nth-child(odd) {
+  background-color: white;
+}
+
+.restuarant-table #container {
+  margin: auto;
+  margin-top: 15px;
+}
+
+.restuarant-table h3 {
+  margin-left: 126px;
+}
+
+.restuarant-table #selectFood {
+  width: 80%;
+  margin: auto;
+  margin-bottom: 10px;
+}

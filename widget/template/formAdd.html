@@ -1,0 +1,33 @@
+<div class="formAdd" data-dojo-attach-point="formAdd">
+  <form data-dojo-attach-point="form">
+    <label for="name">Name: </label>
+    <input
+      type="text"
+      id="nameInput"
+      name="nameInput"
+      value=""
+      data-dojo-attach-point="nameInput"
+    />
+
+    <div id="selectType" data-dojo-attach-point="selectType"></div>
+
+    <label for="detail">Detail:</label>
+    <textarea
+      id="detail"
+      name="detail"
+      rows="4"
+      cols="50"
+      data-dojo-attach-point="detail"
+    >
+    </textarea>
+
+    <div class="btnForm">
+      <button type="submit" id="submit" data-dojo-attach-point="submit">
+        save
+      </button>
+      <button type="button" id="cancel" data-dojo-attach-point="cancel">
+        cancel
+      </button>
+    </div>
+  </form>
+</div>

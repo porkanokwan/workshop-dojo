@@ -1,0 +1,27 @@
+body {
+  background-color: rgb(101, 219, 131);
+}
+
+#home {
+  color: white;
+}
+
+#restuarant {
+  box-shadow: 4px 4px 4px 0px whitesmoke;
+  margin-right: 45px;
+  padding: 8px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btnHeader {
+  margin-top: 23px;
+}
+
+#tableRes {
+  width: 100%;
+  margin: auto;
+}

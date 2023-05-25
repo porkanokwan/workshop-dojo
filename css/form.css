@@ -1,0 +1,19 @@
+.form-add form {
+  display: flex;
+  flex-flow: column wrap;
+  width: 80%;
+  margin: auto;
+}
+
+.form-add .btnForm {
+  display: flex;
+  margin-top: 15px;
+}
+
+.form-add .btnForm button:last-child {
+  margin-left: 12px;
+}
+
+/* .form-add #selectType {
+  display: inline-block;
+} */

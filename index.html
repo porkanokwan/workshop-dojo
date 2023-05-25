@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./css/home.css" />
+    <link
+      href="//ajax.googleapis.com/ajax/libs/dojo/1.9.3/dijit/themes/claro/claro.css"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="#" />
+    <title>Tutorial: Dojo!</title>
+  </head>
+  <body>
+    <div class="header">
+      <h1 id="home">Home</h1>
+
+      <div class="btnHeader">
+        <button id="restuarant" type="button">Open Restaurant Table</button>
+      </div>
+    </div>
+
+    <div id="tableRes"></div>
+    <div id="tableMenu"></div>
+    <!-- load Dojo -->
+    <script src="./config/dojoConfig.js"></script>
+    <script
+      src="//ajax.googleapis.com/ajax/libs/dojo/1.9.3/dojo/dojo.js"
+      data-dojo-config="async: true"
+    ></script>
+
+    <script type="text/javascript">
+      require([
+        "dojo/parser", // ต้องมี
+        "dojo/dom",
+        "dojo/dom-construct",
+        "dojo/router",
+        "dojo/on",
+        "dojo/ready", // ต้องมี
+        "widget/ContianerRes",
+        "dojo/_base/lang",
+        "dijit/registry",
+      ], function (
+        parser,
+        dom,
+        domConstruct,
+        router,
+        on,
+        ready,
+        ContianerRes,
+        lang,
+        registry
+      ) {
+        ready(function () {
+          parser.parse();
+          let divTable = document.getElementById("tableRes");
+          let widgetContainerRes = new ContianerRes();
+
+          on(
+            dom.byId("restuarant"),
+            "click",
+            lang.hitch(this, function (event) {
+              divTable.appendChild(widgetContainerRes.domNode);
+            })
+          );
+        });
+      });
+    </script>
+  </body>
+</html>
