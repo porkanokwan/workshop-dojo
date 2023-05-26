@@ -1,3 +1,4 @@
+// ยังไม่ได้ใช้
 let GlobalFunction = new Object()
 
 

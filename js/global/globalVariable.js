@@ -1,3 +1,4 @@
+// ยังไม่ได้ใช้
 let GlobalVariable = new Object()
 
 GlobalVariable.MessageError = 'บันทึกข้อมูลไม่สำเร็จ';

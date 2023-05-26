@@ -31,6 +31,26 @@ define([
     domConstruct,
     query,
 ) {    
+  (function (href) {
+    let headID = document.getElementsByTagName("head").item(0),
+      cssNode;
+    let link = document.getElementsByTagName("link");
+    let cssExist = false;
+    for (let j = 0; j < link.length; j++) {
+      if (link.item(j).href.toString().indexOf(href) > -1) {
+        cssExist = true;
+        break;
+      }
+    }
+    if (!cssExist) {
+      cssNode = document.createElement("link");
+      cssNode.type = "text/css";
+      cssNode.rel = "stylesheet";
+      cssNode.href = href;
+      headID.appendChild(cssNode);
+    }
+  })(require.toUrl("../css/select.css"));
+
     let decWidget = declare(
         [_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented],
         {
@@ -57,8 +77,12 @@ define([
               }
 
               on(this.typeFood, "change", lang.hitch(this, function () {
-                this._onChange()
+                this.onSearchBySelect()
               }))
+            
+            if (this.width) {
+              domStyle.set(this.selectFood, { width: this.width, margin: "auto", marginTop: "10px" });
+            }
           },
     
           startup: function() {
@@ -80,7 +104,7 @@ define([
           // End: Public Method
           
           // Start: Public Event
-          _onChange: function (value) {  },
+          onSearchBySelect: function (value) {  },
           // End: Public Event
         }
     );

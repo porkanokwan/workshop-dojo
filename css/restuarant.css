@@ -32,17 +32,7 @@
   background-color: white;
 }
 
-.restuarant-table #container {
+.restuarant-table #restable {
   margin: auto;
   margin-top: 15px;
-}
-
-.restuarant-table h3 {
-  margin-left: 126px;
-}
-
-.restuarant-table #selectFood {
-  width: 80%;
-  margin: auto;
-  margin-bottom: 10px;
 }

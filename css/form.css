@@ -14,6 +14,6 @@
   margin-left: 12px;
 }
 
-/* .form-add #selectType {
-  display: inline-block;
-} */
+.form-add textarea {
+  display: flex;
+}

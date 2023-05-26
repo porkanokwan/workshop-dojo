@@ -1,24 +1,20 @@
 <div id="container">
-  <h3><strong>Max's Burger Menu</strong></h3>
-  <h3 id="nameMenu" data-dojo-attach-point="nameMenu"><strong></strong></h3>
-
-  <div id="selectFood" data-dojo-attach-point="selectFood">
-    <label for="typeFood">Select Type: </label>
-  </div>
-
   <table id="burgertable" data-dojo-attach-point="burgertable">
-    <tr>
-      <th class="tableHeader1" data-dojo-attach-point="tableHeader1">Name</th>
-      <th class="tableHeader2" data-dojo-attach-point="tableHeader2">Type</th>
-      <th class="tableHeader3" data-dojo-attach-point="tableHeader3">
-        Price(Bath)
-      </th>
-      <th
-        class="tableHeader4"
-        data-dojo-attach-point="tableHeader4"
-        colspan="2"
-      ></th>
-    </tr>
+    <thead>
+      <tr>
+        <th class="tableHeader1" data-dojo-attach-point="tableHeader1">Name</th>
+        <th class="tableHeader2" data-dojo-attach-point="tableHeader2">Type</th>
+        <th class="tableHeader3" data-dojo-attach-point="tableHeader3">
+          Price(Bath)
+        </th>
+        <th
+          class="tableHeader4"
+          data-dojo-attach-point="tableHeader4"
+          colspan="2"
+        ></th>
+      </tr>
+    </thead>
+    <tbody data-dojo-attach-point="tbody"></tbody>
     <!-- <tr>
       <td>Cheese Burger</td>
       <td>Fast Food</td>
@@ -35,10 +31,4 @@
       </td>
     </tr> -->
   </table>
-
-  <button type="button" id="add" data-dojo-attach-point="add">
-    Add New Menu
-  </button>
-
-  <div id="form" data-dojo-attach-point="form"></div>
 </div>

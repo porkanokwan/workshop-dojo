@@ -1,9 +1,13 @@
-.container-res h3 {
+.container-menu {
+  margin-top: 20px;
+}
+
+.container-menu h3 {
   width: 80%;
   margin: auto;
 }
 
-.container-res #add {
+.container-menu #add {
   margin-top: 15px;
   margin-left: 126px;
   margin-bottom: 15px;

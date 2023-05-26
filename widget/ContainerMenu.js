@@ -5,7 +5,7 @@ define([
   "dijit/_TemplatedMixin",
   "dijit/_WidgetsInTemplateMixin",
   "dojo/Evented",
-  "dojo/text!./template/containerRes.html", // Import file
+  "dojo/text!./template/containerMenu.html", // Import file
   "dojo/_base/lang",
   "dojo/on",
   "dojo/dom-class",
@@ -14,7 +14,7 @@ define([
   "dojo/dom-style",
   "dojo/dom-construct",
   "dojo/query",
-  "widget/RestuarantTable",
+  "widget/BurgerMenu",
   "widget/FormAdd",
   "widget/SelectType",
 ], function (
@@ -33,7 +33,7 @@ define([
   domStyle,
   domConstruct,
   query,
-  RestuarantTable,
+  BurgerMenu,
   FormAdd,
   SelectType
 ) {
@@ -55,17 +55,18 @@ define([
       cssNode.href = href;
       headID.appendChild(cssNode);
     }
-  })(require.toUrl("../css/containerRes.css"));
+  })(require.toUrl("../css/containerMenu.css"));
 
-  let type = ["All", "Fast Food", "Japanese", "Thai", "French"];
-  let typeForForm = ["Fast Food", "Japanese", "Thai", "French"];
+  let type = ["All", "Food", "Dessert", "Beverage"];
+  let typeForForm = ["Food", "Dessert", "Beverage"];
 
-  let restuarant = [
-    { name: "Max Burger", type: "Fast Food", detail: "" },
-    { name: "Tenryu", type: "Japanese", detail: "" },
-    { name: "W and A", type: "Fast Food", detail: "" },
-    { name: "Raan Pad Thai", type: "Thai", detail: "" },
-    { name: "La viva", type: "French", detail: "" },
+  let fastFood = [
+    { name: "Cheese Burger", type: "Food", price: 100 },
+    { name: "Fish Burger", type: "Food", price: 80 },
+    { name: "Double Cheese Burger", type: "Food", price: 120 },
+    { name: "Chocholate Sundae", type: "Dessert", price: 30 },
+    { name: "Water", type: "Beverage", price: 10 },
+    { name: "Soft Drink", type: "Beverage", price: 15 },
   ];
 
   let decWidget = declare(
@@ -73,7 +74,7 @@ define([
     {
       basePath: require.toUrl("./"), // ต้องมี
       templateString: templates, // ต้องมี
-      baseClass: "container-res", // ต้องมี อันนี้มีไว้เพื่อกันการชื่อซ้ำ จะใช้เวลากำนหด css จะได้รู้ว่า css ของใคร
+      baseClass: "container-menu", // ต้องมี อันนี้มีไว้เพื่อกันการชื่อซ้ำ จะใช้เวลากำนหด css จะได้รู้ว่า css ของใคร
 
       // ต้องมี
       constructor: function (param, elem) {},
@@ -86,37 +87,39 @@ define([
         this.inherited(arguments); // ต้องมี ช่วยให้เวลาเรียก this มันจะรู้ว่าเป็นตัวไหนใน html
 
         // ในนี้จะมีทุกอย่างที่ต้องการทำ
-        localStorage.setItem("restuarantList", JSON.stringify(restuarant));
+        localStorage.setItem("foodList", JSON.stringify(fastFood));
+
+        this.nameMenu.innerText = this.title;
 
         let select = new SelectType({ type, title: "Select type: ", width: "80%" });
-        this.container.appendChild(select.domNode);
+        this.containerMenu.appendChild(select.domNode);
 
-        let widgetRestuarant = new RestuarantTable();
-        this.container.appendChild(widgetRestuarant.domNode);
-        widgetRestuarant.setTable(
+        let widgetMenu = new BurgerMenu({ headerColor: "#11167a" });
+        this.containerMenu.appendChild(widgetMenu.domNode);
+        widgetMenu.setTable(
           "start",
-          JSON.parse(localStorage.getItem("restuarantList"))
+          JSON.parse(localStorage.getItem("foodList"))
         );
 
         // Handle click on "Add" button
         let btnAdd = domConstruct.create(
           "button",
           { id: "add", type: "button" },
-          this.container
+          this.containerMenu
         );
-        btnAdd.innerText = "Add New Restaurant";
+        btnAdd.innerText = "Add New Menu";
         domAttr.set(btnAdd, "data-dojo-attach-point", "add");
 
         let widgetFormAdd = new FormAdd({
           type: typeForForm,
-          title: "Restaurant",
+          title: "BurgerMenu",
           mode: "ADD",
         });
         on(
           btnAdd,
           "click",
           lang.hitch(this, function (e) {
-            this.container.appendChild(widgetFormAdd.domNode);
+            this.containerMenu.appendChild(widgetFormAdd.domNode);
           })
         );
 
@@ -125,34 +128,32 @@ define([
           widgetFormAdd,
           "SaveForm",
           lang.hitch(this, function (e) {
-            let newList = JSON.parse(localStorage.getItem("restuarantList"));
-            widgetRestuarant.setTable("add", newList);
+            let newList = JSON.parse(localStorage.getItem("foodList"));
+            widgetMenu.setTable("add", newList);
           })
         );
 
-        // Example use public event of RestuarantTable
+        // Example use public event of BuregerMenu
         // คอยดูว่ามีการใช้ Event EditClick เกิดขึ้นไหม ถ้ามี function on นี้ถึงจะทำงาน
         on(
-          widgetRestuarant,
+          widgetMenu,
           "EditClick",
           lang.hitch(this, function (i, e) {
             let widgetFormEdit = new FormAdd({
               type: typeForForm,
-              title: "Restaurant",
+              title: "BurgerMenu",
               mode: "EDIT",
-              data: JSON.parse(localStorage.getItem("restuarantList"))[i],
+              data: JSON.parse(localStorage.getItem("foodList"))[i],
             });
-            this.container.appendChild(widgetFormEdit.domNode);
+            this.containerMenu.appendChild(widgetFormEdit.domNode);
 
             // Handle form save on "SaveForm" event (Edit)
             on(
               widgetFormEdit,
               "SaveForm",
               lang.hitch(this, function (e) {
-                let newList = JSON.parse(
-                  localStorage.getItem("restuarantList")
-                );
-                widgetRestuarant.setTable("edit", newList);
+                let newList = JSON.parse(localStorage.getItem("foodList"));
+                widgetMenu.setTable("edit", newList);
               })
             );
           })
@@ -160,14 +161,14 @@ define([
 
         // Handle work on "DeleteRow" event
         on(
-          widgetRestuarant,
+          widgetMenu,
           "DeleteRow",
           lang.hitch(this, function (i, e) {
-            let newList = JSON.parse(
-              localStorage.getItem("restuarantList")
-            ).filter((item, idx) => idx !== i);
-            localStorage.setItem("restuarantList", JSON.stringify(newList));
-            widgetRestuarant.setTable("delete", newList);
+            let newList = JSON.parse(localStorage.getItem("foodList")).filter(
+              (item, idx) => idx !== i
+            );
+            localStorage.setItem("foodList", JSON.stringify(newList));
+            widgetMenu.setTable("delete", newList);
           })
         );
 
@@ -178,23 +179,14 @@ define([
           lang.hitch(this, function (e) {
             let search = select.getValue();
             if (search === "All") {
-              let list = JSON.parse(localStorage.getItem("restuarantList"));
-              widgetRestuarant.setTable("search", list);
+              let list = JSON.parse(localStorage.getItem("foodList"));
+              widgetMenu.setTable("search", list);
             } else {
-              let list = JSON.parse(
-                localStorage.getItem("restuarantList")
-              ).filter((item) => item.type === search);
-              widgetRestuarant.setTable("search", list);
+              let list = JSON.parse(localStorage.getItem("foodList")).filter(
+                (item) => item.type === search
+              );
+              widgetMenu.setTable("search", list);
             }
-          })
-        );
-
-        //  Handle Open Menu Table
-        on(
-          widgetRestuarant,
-          "ViewMenu",
-          lang.hitch(this, function (title, e) {
-              this.onOpenMenuTable(title)
           })
         );
       },
@@ -202,8 +194,6 @@ define([
       startup: function () {
         this.inherited(arguments);
       },
-
-      onOpenMenuTable: function (title) {},
     }
   );
 

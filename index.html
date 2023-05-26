@@ -37,6 +37,7 @@
         "dojo/on",
         "dojo/ready", // ต้องมี
         "widget/ContianerRes",
+        "widget/ContainerMenu",
         "dojo/_base/lang",
         "dijit/registry",
       ], function (
@@ -47,12 +48,14 @@
         on,
         ready,
         ContianerRes,
+        ContainerMenu,
         lang,
         registry
       ) {
         ready(function () {
           parser.parse();
           let divTable = document.getElementById("tableRes");
+          let divMenu = document.getElementById("tableMenu");
           let widgetContainerRes = new ContianerRes();
 
           on(
@@ -60,6 +63,15 @@
             "click",
             lang.hitch(this, function (event) {
               divTable.appendChild(widgetContainerRes.domNode);
+            })
+          );
+
+          on(
+            widgetContainerRes,
+            "OpenMenuTable",
+            lang.hitch(this, function (title, event) {
+              let widgetContainerMenu = new ContainerMenu({ title });
+              divMenu.appendChild(widgetContainerMenu.domNode);
             })
           );
         });

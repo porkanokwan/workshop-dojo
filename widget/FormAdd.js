@@ -10,6 +10,8 @@ define([
   "dojo/_base/lang",
   "dojo/on",
   "widget/SelectType",
+  "dojo/dom-construct",
+  "dojo/dom-attr",
 ], function (
   dom,
   declare,
@@ -21,7 +23,9 @@ define([
   templates /*template*/,
   lang,
   on,
-  SelectType
+  SelectType,
+  domConstruct,
+  domAttr
 ) {
   (function (href) {
     var headID = document.getElementsByTagName("head").item(0),
@@ -50,6 +54,9 @@ define([
       templateString: templates,
       baseClass: "form-add",
 
+      // Private Properties
+      inputPrice: null,
+
       constructor: function (param, elem) {},
 
       postMixInProperties: function () {},
@@ -60,8 +67,21 @@ define([
         let select = new SelectType({ type: this.type, title: "Type: " });
         this.selectType.appendChild(select.domNode);
 
+        if (this.title === "BurgerMenu") {
+          domConstruct.empty(this.box);
+          let label = domConstruct.create("label", { for: "price" }, this.box);
+          label.innerText = "Price: ";
+          let input = domConstruct.create(
+            "input",
+            { type: "text", id: "price", name: "price", value: "" },
+            this.box
+          );
+          domAttr.set(input, "data-dojo-attach-point", "price");
+          this.inputPrice = input;
+        }
+
         this._attachEvent(select);
-        //   let widgetBurger = new BurgerMenu();
+
         if (this.mode === "EDIT") {
           if (this.title === "BurgerMenu") {
             this.setText(this.data.name);
@@ -87,6 +107,7 @@ define([
           "submit",
           lang.hitch(this, function (evt) {
             this._saveForm(evt, selected);
+            this.onSaveForm();
           })
         );
         // Handle click on "Cancel" button
@@ -110,14 +131,13 @@ define([
             );
             objEdit.name = this.getText();
             objEdit.type = selected.getValue();
-            objEdit.price = this.detail.value;
-            this._params = objEdit;
+            objEdit.price = this.getValueAttr();
             localStorage.setItem("foodList", JSON.stringify(list));
           } else {
             this._params = {};
             this._params.name = this.getText();
             this._params.type = selected.getValue();
-            this._params.detail = this.detail.value;
+            this._params.price = this.getValueAttr();
             list.push(this._params);
             localStorage.setItem("foodList", JSON.stringify(list));
           }
@@ -131,7 +151,6 @@ define([
             objEdit.name = this.getText();
             objEdit.type = selected.getValue();
             objEdit.detail = this.detail.value;
-            this._params = objEdit;
             localStorage.setItem("restuarantList", JSON.stringify(list));
           } else {
             this._params = {};
@@ -144,7 +163,6 @@ define([
         }
 
         this._cancel(selected);
-        this.onSaveForm(this._params);
       },
 
       // Start: Private Method
@@ -162,11 +180,19 @@ define([
 
       // Start: Public Method
       getValueAttr: function () {
-        return this.detail.value;
+        if (this.title === "BurgerMenu") {
+            return this.inputPrice.value;
+          } else {
+            return this.detail.value;
+          }
       },
 
       setValueAttr: function (value) {
-        this.detail.value = value;
+        if (this.title === "BurgerMenu") {
+          this.inputPrice.value = value;
+        } else {
+          this.detail.value = value;
+        }
       },
 
       getText: function () {

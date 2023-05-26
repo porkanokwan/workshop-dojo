@@ -1,3 +1,37 @@
-.burger-table th {
+/* .burger-table th {
   background-color: #11167a !important;
+} */
+
+.burger-table table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+  margin: auto;
+}
+
+.burger-table th {
+  border: 1px solid #565555;
+  text-align: left;
+  padding: 8px;
+  color: white;
+}
+
+.burger-table td {
+  border: 1px solid #565555;
+  text-align: left;
+  padding: 8px;
+  color: black;
+}
+
+.burger-table tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.burger-table tr:nth-child(odd) {
+  background-color: white;
+}
+
+.burger-table #burgertable {
+  margin: auto;
+  margin-top: 15px;
 }

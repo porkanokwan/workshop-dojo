@@ -29,7 +29,7 @@ define([
   domAttr,
   domStyle,
   domConstruct,
-  query,
+  query
 ) {
   (function (href) {
     let headID = document.getElementsByTagName("head").item(0),
@@ -116,14 +116,13 @@ define([
           this.tbody.appendChild(tableRow);
 
           // Handle click on "View Menu" button
-          // let widgetBurger = new BurgerMenu({headerColor: "#11167a", label: restuarant[i].name});
-          //     on(
-          //       btnView,
-          //       "click",
-          //       lang.hitch(this, function(e) {
-          //           this.burgerTable.appendChild(widgetBurger.domNode)
-          //       })
-          //     );
+          on(
+            btnView,
+            "click",
+            lang.hitch(this, function (e) {
+              this.onViewMenu(allList[i].name);
+            })
+          );
 
           // Handle click on "Edit" button
           on(
@@ -147,10 +146,13 @@ define([
         }
       },
 
-      // Public event ที่สร้างขึ้นมาลอยๆ ให้ widget ตัวอื่นเรียกใช้ event นี้ได้ โดยไม่ต้อง import
+      // Strat: Public event ที่สร้างขึ้นมาลอยๆ ให้ widget ตัวอื่นเรียกใช้ event นี้ได้ โดยไม่ต้อง import ซึ่งหลักการสร้างคือ นำหน้าชื่อด้วย on
       onEditClick: function (item) {},
 
       onDeleteRow: function (item) {},
+
+      onViewMenu: function (item) {},
+      // End: Public event
     }
   );
 
